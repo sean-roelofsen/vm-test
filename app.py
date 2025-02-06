@@ -2,6 +2,7 @@ from flask import Flask, render_template_string
 import plotly.graph_objs as go
 import plotly.io as pio
 from flask_cors import CORS
+import os  # To get the PORT environment variable
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
@@ -41,5 +42,6 @@ def index():
     """, chart=chart_html)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8500, ssl_context=("cert.pem", "key.pem"))
-
+    # Use the port provided by Azure, or default to 8000
+    port = int(os.environ.get("PORT", 8000))
+    app.run(host="0.0.0.0", port=port)
